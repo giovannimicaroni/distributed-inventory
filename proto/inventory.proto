@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package inventory;
+
+service NodeService {
+  rpc SendMessage (Message) returns (Message);
+}
+
+message Message {
+  int32  sender_id  = 1;
+  int64  lamport_ts = 2;
+  string content    = 3;
+}
