@@ -12,12 +12,14 @@ import inventory_pb2
 import inventory_pb2_grpc
 
 from lamport_clock import LamportClock
+from mutex import RicartAgrawala
 
 NODE_ID   = int(os.environ['NODE_ID'])
 NODE_PORT = int(os.environ['NODE_PORT'])
 PEERS     = [p for p in os.environ.get('PEERS', '').split(',') if p]
 
 clock = LamportClock()
+mutex = RicartAgrawala(NODE_ID, clock)
 
 
 def log(msg):
@@ -37,6 +39,11 @@ class NodeServicer(inventory_pb2_grpc.NodeServiceServicer):
             lamport_ts=clock.tick(),
             content=f"ack from node{NODE_ID}",
         )
+
+    def RequestCS(self, request, context):
+        clock.update(request.lamport_ts)
+        reply_ts = mutex.on_request(request.node_id, request.lamport_ts)
+        return inventory_pb2.CSReply(node_id=NODE_ID, lamport_ts=reply_ts)
 
 
 def serve():
@@ -74,26 +81,18 @@ def wait_for_peers(stubs: dict):
 
 
 # ---------------------------------------------------------------------------
-# Lamport clock test loop
+# Checkout loop (exercises Ricart-Agrawala mutex)
 # ---------------------------------------------------------------------------
 
-def lamport_test_loop(stubs: dict):
-    peer_list = list(stubs.items())
+def checkout_loop(stubs: dict):
     while True:
-        time.sleep(random.uniform(1, 3))
-        addr, stub = random.choice(peer_list)
-        ts = clock.tick()
-        log(f"send to {addr} ts={ts}")
-        try:
-            reply = stub.SendMessage(inventory_pb2.Message(
-                sender_id=NODE_ID,
-                lamport_ts=ts,
-                content=f"ping from node{NODE_ID}",
-            ), timeout=5)
-            clock.update(reply.lamport_ts)
-            log(f"ack from {addr} reply_ts={reply.lamport_ts}")
-        except grpc.RpcError as e:
-            log(f"RPC to {addr} failed: {e.code()}")
+        time.sleep(random.uniform(2, 5))
+        log("REQUESTING CS")
+        mutex.request_cs(stubs)
+        log("ENTERING CS — inventory checkout")
+        time.sleep(random.uniform(0.1, 0.5))
+        log("EXITING CS")
+        mutex.release_cs()
 
 
 # ---------------------------------------------------------------------------
@@ -106,7 +105,7 @@ def main():
     stubs = make_stubs()
     wait_for_peers(stubs)
 
-    threading.Thread(target=lamport_test_loop, args=(stubs,), daemon=True).start()
+    threading.Thread(target=checkout_loop, args=(stubs,), daemon=True).start()
 
     server.wait_for_termination()
 

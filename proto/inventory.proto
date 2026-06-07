@@ -3,11 +3,22 @@ syntax = "proto3";
 package inventory;
 
 service NodeService {
-  rpc SendMessage (Message) returns (Message);
+  rpc SendMessage (Message)   returns (Message);
+  rpc RequestCS   (CSRequest) returns (CSReply);
 }
 
 message Message {
   int32  sender_id  = 1;
   int64  lamport_ts = 2;
   string content    = 3;
+}
+
+message CSRequest {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message CSReply {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
 }

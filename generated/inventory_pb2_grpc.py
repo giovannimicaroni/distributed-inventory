@@ -39,12 +39,23 @@ class NodeServiceStub:
                 request_serializer=inventory__pb2.Message.SerializeToString,
                 response_deserializer=inventory__pb2.Message.FromString,
                 _registered_method=True)
+        self.RequestCS = channel.unary_unary(
+                '/inventory.NodeService/RequestCS',
+                request_serializer=inventory__pb2.CSRequest.SerializeToString,
+                response_deserializer=inventory__pb2.CSReply.FromString,
+                _registered_method=True)
 
 
 class NodeServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def SendMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RequestCS(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     servicer.SendMessage,
                     request_deserializer=inventory__pb2.Message.FromString,
                     response_serializer=inventory__pb2.Message.SerializeToString,
+            ),
+            'RequestCS': grpc.unary_unary_rpc_method_handler(
+                    servicer.RequestCS,
+                    request_deserializer=inventory__pb2.CSRequest.FromString,
+                    response_serializer=inventory__pb2.CSReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class NodeService:
             '/inventory.NodeService/SendMessage',
             inventory__pb2.Message.SerializeToString,
             inventory__pb2.Message.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RequestCS(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/inventory.NodeService/RequestCS',
+            inventory__pb2.CSRequest.SerializeToString,
+            inventory__pb2.CSReply.FromString,
             options,
             channel_credentials,
             insecure,
