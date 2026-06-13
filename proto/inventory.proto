@@ -3,8 +3,12 @@ syntax = "proto3";
 package inventory;
 
 service NodeService {
-  rpc SendMessage (Message)   returns (Message);
-  rpc RequestCS   (CSRequest) returns (CSReply);
+  rpc SendMessage   (Message)        returns (Message);
+  rpc RequestCS     (CSRequest)      returns (CSReply);
+  rpc Election      (ElectionMsg)    returns (ElectionAck);
+  rpc Coordinator   (CoordinatorMsg) returns (CoordinatorAck);
+  rpc Ping          (PingRequest)    returns (PingReply);
+  rpc SyncInventory (SyncMsg)        returns (SyncAck);
 }
 
 message Message {
@@ -20,5 +24,47 @@ message CSRequest {
 
 message CSReply {
   int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message ElectionMsg {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message ElectionAck {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+  bool  ok         = 3;
+}
+
+message CoordinatorMsg {
+  int32 leader_id  = 1;
+  int64 lamport_ts = 2;
+}
+
+message CoordinatorAck {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message PingRequest {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message PingReply {
+  int32 node_id    = 1;
+  int64 lamport_ts = 2;
+}
+
+message SyncMsg {
+  int32 sender_id  = 1;
+  int64 lamport_ts = 2;
+  int32 inventory  = 3;
+}
+
+message SyncAck {
+  int32 sender_id  = 1;
   int64 lamport_ts = 2;
 }

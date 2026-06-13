@@ -44,6 +44,26 @@ class NodeServiceStub:
                 request_serializer=inventory__pb2.CSRequest.SerializeToString,
                 response_deserializer=inventory__pb2.CSReply.FromString,
                 _registered_method=True)
+        self.Election = channel.unary_unary(
+                '/inventory.NodeService/Election',
+                request_serializer=inventory__pb2.ElectionMsg.SerializeToString,
+                response_deserializer=inventory__pb2.ElectionAck.FromString,
+                _registered_method=True)
+        self.Coordinator = channel.unary_unary(
+                '/inventory.NodeService/Coordinator',
+                request_serializer=inventory__pb2.CoordinatorMsg.SerializeToString,
+                response_deserializer=inventory__pb2.CoordinatorAck.FromString,
+                _registered_method=True)
+        self.Ping = channel.unary_unary(
+                '/inventory.NodeService/Ping',
+                request_serializer=inventory__pb2.PingRequest.SerializeToString,
+                response_deserializer=inventory__pb2.PingReply.FromString,
+                _registered_method=True)
+        self.SyncInventory = channel.unary_unary(
+                '/inventory.NodeService/SyncInventory',
+                request_serializer=inventory__pb2.SyncMsg.SerializeToString,
+                response_deserializer=inventory__pb2.SyncAck.FromString,
+                _registered_method=True)
 
 
 class NodeServiceServicer:
@@ -61,6 +81,30 @@ class NodeServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Election(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Coordinator(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Ping(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SyncInventory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NodeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +117,26 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     servicer.RequestCS,
                     request_deserializer=inventory__pb2.CSRequest.FromString,
                     response_serializer=inventory__pb2.CSReply.SerializeToString,
+            ),
+            'Election': grpc.unary_unary_rpc_method_handler(
+                    servicer.Election,
+                    request_deserializer=inventory__pb2.ElectionMsg.FromString,
+                    response_serializer=inventory__pb2.ElectionAck.SerializeToString,
+            ),
+            'Coordinator': grpc.unary_unary_rpc_method_handler(
+                    servicer.Coordinator,
+                    request_deserializer=inventory__pb2.CoordinatorMsg.FromString,
+                    response_serializer=inventory__pb2.CoordinatorAck.SerializeToString,
+            ),
+            'Ping': grpc.unary_unary_rpc_method_handler(
+                    servicer.Ping,
+                    request_deserializer=inventory__pb2.PingRequest.FromString,
+                    response_serializer=inventory__pb2.PingReply.SerializeToString,
+            ),
+            'SyncInventory': grpc.unary_unary_rpc_method_handler(
+                    servicer.SyncInventory,
+                    request_deserializer=inventory__pb2.SyncMsg.FromString,
+                    response_serializer=inventory__pb2.SyncAck.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +193,114 @@ class NodeService:
             '/inventory.NodeService/RequestCS',
             inventory__pb2.CSRequest.SerializeToString,
             inventory__pb2.CSReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Election(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/inventory.NodeService/Election',
+            inventory__pb2.ElectionMsg.SerializeToString,
+            inventory__pb2.ElectionAck.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Coordinator(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/inventory.NodeService/Coordinator',
+            inventory__pb2.CoordinatorMsg.SerializeToString,
+            inventory__pb2.CoordinatorAck.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Ping(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/inventory.NodeService/Ping',
+            inventory__pb2.PingRequest.SerializeToString,
+            inventory__pb2.PingReply.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SyncInventory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/inventory.NodeService/SyncInventory',
+            inventory__pb2.SyncMsg.SerializeToString,
+            inventory__pb2.SyncAck.FromString,
             options,
             channel_credentials,
             insecure,

@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0finventory.proto\x12\tinventory\"A\n\x07Message\x12\x11\n\tsender_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\"0\n\tCSRequest\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\".\n\x07\x43SReply\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x32{\n\x0bNodeService\x12\x35\n\x0bSendMessage\x12\x12.inventory.Message\x1a\x12.inventory.Message\x12\x35\n\tRequestCS\x12\x14.inventory.CSRequest\x1a\x12.inventory.CSReplyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0finventory.proto\x12\tinventory\"A\n\x07Message\x12\x11\n\tsender_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\"0\n\tCSRequest\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\".\n\x07\x43SReply\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\"2\n\x0b\x45lectionMsg\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\">\n\x0b\x45lectionAck\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x12\n\n\x02ok\x18\x03 \x01(\x08\"7\n\x0e\x43oordinatorMsg\x12\x11\n\tleader_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\"5\n\x0e\x43oordinatorAck\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\"2\n\x0bPingRequest\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\"0\n\tPingReply\x12\x0f\n\x07node_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\"C\n\x07SyncMsg\x12\x11\n\tsender_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x12\x11\n\tinventory\x18\x03 \x01(\x05\"0\n\x07SyncAck\x12\x11\n\tsender_id\x18\x01 \x01(\x05\x12\x12\n\nlamport_ts\x18\x02 \x01(\x03\x32\xeb\x02\n\x0bNodeService\x12\x35\n\x0bSendMessage\x12\x12.inventory.Message\x1a\x12.inventory.Message\x12\x35\n\tRequestCS\x12\x14.inventory.CSRequest\x1a\x12.inventory.CSReply\x12:\n\x08\x45lection\x12\x16.inventory.ElectionMsg\x1a\x16.inventory.ElectionAck\x12\x43\n\x0b\x43oordinator\x12\x19.inventory.CoordinatorMsg\x1a\x19.inventory.CoordinatorAck\x12\x34\n\x04Ping\x12\x16.inventory.PingRequest\x1a\x14.inventory.PingReply\x12\x37\n\rSyncInventory\x12\x12.inventory.SyncMsg\x1a\x12.inventory.SyncAckb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,6 +37,22 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_CSREQUEST']._serialized_end=145
   _globals['_CSREPLY']._serialized_start=147
   _globals['_CSREPLY']._serialized_end=193
-  _globals['_NODESERVICE']._serialized_start=195
-  _globals['_NODESERVICE']._serialized_end=318
+  _globals['_ELECTIONMSG']._serialized_start=195
+  _globals['_ELECTIONMSG']._serialized_end=245
+  _globals['_ELECTIONACK']._serialized_start=247
+  _globals['_ELECTIONACK']._serialized_end=309
+  _globals['_COORDINATORMSG']._serialized_start=311
+  _globals['_COORDINATORMSG']._serialized_end=366
+  _globals['_COORDINATORACK']._serialized_start=368
+  _globals['_COORDINATORACK']._serialized_end=421
+  _globals['_PINGREQUEST']._serialized_start=423
+  _globals['_PINGREQUEST']._serialized_end=473
+  _globals['_PINGREPLY']._serialized_start=475
+  _globals['_PINGREPLY']._serialized_end=523
+  _globals['_SYNCMSG']._serialized_start=525
+  _globals['_SYNCMSG']._serialized_end=592
+  _globals['_SYNCACK']._serialized_start=594
+  _globals['_SYNCACK']._serialized_end=642
+  _globals['_NODESERVICE']._serialized_start=645
+  _globals['_NODESERVICE']._serialized_end=1008
 # @@protoc_insertion_point(module_scope)
